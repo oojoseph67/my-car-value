@@ -9,6 +9,8 @@ import {
   Patch,
   Query,
   Delete,
+  Session,
+  HttpException,
   //   UseInterceptors,
   //   ClassSerializerInterceptor,
 } from '@nestjs/common';
@@ -27,25 +29,48 @@ export class UsersController {
   ) {}
 
   @Serialize(UserDTO)
+  @Get('whoami')
+  whoAmI(@Session() session: any) {
+    console.log({ session });
+    if (!session.userId) {
+      throw new HttpException(
+        'Unauthorized. No session found',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+    return this.userService.findOne({ id: session.userId });
+  }
+
+  @Serialize(UserDTO)
   @Post('signup')
-  signUp(@Body() body: CreateUserDTO) {
-    const response = this.authService.signupAuth({
+  async signUp(@Body() body: CreateUserDTO, @Session() session: any) {
+    const response = await this.authService.signupAuth({
       email: body.email,
       password: body.password,
     });
+
+    session.userId = response.id;
 
     return response;
   }
 
   @Serialize(UserDTO)
   @Post('signin')
-  signIn(@Body() body: SignInUserDTO) {
-    const response = this.authService.signinAuth({
+  async signIn(@Body() body: SignInUserDTO, @Session() session: any) {
+    const response = await this.authService.signinAuth({
       email: body.email,
       password: body.password,
     });
 
+    session.userId = response.id;
+
     return response;
+  }
+
+  @Post('signout')
+  signOut(@Session() session: any) {
+    session.userId = null;
+    return 'Sign out successfully';
   }
 
   //   @UseInterceptors(ClassSerializerInterceptor)
