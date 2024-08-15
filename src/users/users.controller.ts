@@ -9,9 +9,13 @@ import {
   Patch,
   Query,
   Delete,
+  //   UseInterceptors,
+  //   ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UsersService } from './users.service';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { UserDTO } from './dto/user.dto';
 
 @Controller('users/auth')
 export class UsersController {
@@ -27,6 +31,7 @@ export class UsersController {
     return response;
   }
 
+  //   @UseInterceptors(ClassSerializerInterceptor)
   @Get('findOne/:id')
   findOneUser(
     @Param(
@@ -39,6 +44,9 @@ export class UsersController {
     return response;
   }
 
+  //   @UseInterceptors(ClassSerializerInterceptor)
+  //   @UseInterceptors(new SerializeInterceptor(UserDTO))
+  @Serialize(UserDTO)
   @Get()
   findUser(@Query('email') email: string) {
     const response = this.userService.find({ email });
