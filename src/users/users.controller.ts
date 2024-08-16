@@ -10,6 +10,7 @@ import {
   Query,
   Delete,
   Session,
+  UseGuards,
   //   HttpException,
   //   UseInterceptors,
   //   ClassSerializerInterceptor,
@@ -23,6 +24,7 @@ import { SignInUserDTO } from './dto/sign-in.dto';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 // import { CurrentUserInterceptor } from 'src/interceptors/current-user-interceptor';
 import { UserEntity } from 'src/entity/user.entity';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('users/auth')
 @Serialize(UserDTO) // this can be added to an individual method
@@ -34,6 +36,7 @@ export class UsersController {
   ) {}
 
   //   @UseInterceptors(CurrentUserInterceptor)
+  @UseGuards(AuthGuard)
   @Get('whoami')
   whoAmI(@CurrentUser() user: UserEntity) {
     return user;
