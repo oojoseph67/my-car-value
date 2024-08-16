@@ -9,8 +9,9 @@ import {
   Patch,
   Query,
   Delete,
+  UseInterceptors,
   Session,
-  HttpException,
+  //   HttpException,
   //   UseInterceptors,
   //   ClassSerializerInterceptor,
 } from '@nestjs/common';
@@ -20,28 +21,35 @@ import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDTO } from './dto/user.dto';
 import { AuthService } from './auth/auth.service';
 import { SignInUserDTO } from './dto/sign-in.dto';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
+import { CurrentUserInterceptor } from 'src/interceptors/current-user-interceptor';
+import { UserEntity } from 'src/entity/user.entity';
 
 @Controller('users/auth')
+@Serialize(UserDTO) // this can be added to an individual method
+@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private userService: UsersService,
     private authService: AuthService,
   ) {}
 
-  @Serialize(UserDTO)
+  //   @UseInterceptors(CurrentUserInterceptor)
   @Get('whoami')
-  whoAmI(@Session() session: any) {
-    console.log({ session });
-    if (!session.userId) {
-      throw new HttpException(
-        'Unauthorized. No session found',
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
-    return this.userService.findOne({ id: session.userId });
+  whoAmI(@CurrentUser() user: UserEntity) {
+    return user;
   }
+  //   whoAmI(@Session() session: any) {
+  //     console.log({ session });
+  //     if (!session.userId) {
+  //       throw new HttpException(
+  //         'Unauthorized. No session found',
+  //         HttpStatus.UNAUTHORIZED,
+  //       );
+  //     }
+  //   return this.userService.findOne({ id: session.userId });
+  //   }
 
-  @Serialize(UserDTO)
   @Post('signup')
   async signUp(@Body() body: CreateUserDTO, @Session() session: any) {
     const response = await this.authService.signupAuth({
@@ -54,7 +62,6 @@ export class UsersController {
     return response;
   }
 
-  @Serialize(UserDTO)
   @Post('signin')
   async signIn(@Body() body: SignInUserDTO, @Session() session: any) {
     const response = await this.authService.signinAuth({
@@ -88,7 +95,6 @@ export class UsersController {
 
   //   @UseInterceptors(ClassSerializerInterceptor)
   //   @UseInterceptors(new SerializeInterceptor(UserDTO))
-  @Serialize(UserDTO)
   @Get()
   findUser(@Query('email') email: string) {
     const response = this.userService.find({ email });
