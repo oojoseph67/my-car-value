@@ -17,14 +17,14 @@ import {
 } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UsersService } from './users.service';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDTO } from './dto/user.dto';
 import { AuthService } from './auth/auth.service';
 import { SignInUserDTO } from './dto/sign-in.dto';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-// import { CurrentUserInterceptor } from 'src/interceptors/current-user-interceptor';
-import { UserEntity } from 'src/entity/user.entity';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { CurrentUser } from '../decorators/current-user.decorator';
+// import { CurrentUserInterceptor } from '../interceptors/current-user-interceptor';
+import { UserEntity } from '../entity/user.entity';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('users/auth')
 @Serialize(UserDTO) // this can be added to an individual method
