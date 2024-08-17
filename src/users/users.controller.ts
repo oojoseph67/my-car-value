@@ -35,6 +35,15 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
+  /**
+   * Retrieves the currently authenticated user.
+   *
+   * @UseGuards(AuthGuard)
+   * @Get('whoami')
+   *
+   * @param user - The authenticated user entity.
+   * @returns The authenticated user entity.
+   */
   //   @UseInterceptors(CurrentUserInterceptor)
   @UseGuards(AuthGuard)
   @Get('whoami')
@@ -42,6 +51,15 @@ export class UsersController {
     return user;
   }
 
+  /**
+   * Registers a new user.
+   *
+   * @Post('signup')
+   *
+   * @param body - The user data for registration.
+   * @param session - The session object for storing user ID.
+   * @returns The created user entity.
+   */
   @Post('signup')
   async signUp(@Body() body: CreateUserDTO, @Session() session: any) {
     const response = await this.authService.signupAuth({
@@ -54,6 +72,15 @@ export class UsersController {
     return response;
   }
 
+  /**
+   * Authenticates a user.
+   *
+   * @Post('signin')
+   *
+   * @param body - The user credentials for authentication.
+   * @param session - The session object for storing user ID.
+   * @returns The authenticated user entity.
+   */
   @Post('signin')
   async signIn(@Body() body: SignInUserDTO, @Session() session: any) {
     const response = await this.authService.signinAuth({
@@ -66,12 +93,28 @@ export class UsersController {
     return response;
   }
 
+  /**
+   * Signs out the currently authenticated user.
+   *
+   * @Post('signout')
+   *
+   * @param session - The session object for removing user ID.
+   * @returns A success message.
+   */
   @Post('signout')
   signOut(@Session() session: any) {
     session.userId = null;
     return 'Sign out successfully';
   }
 
+  /**
+   * Retrieves a user by their ID.
+   *
+   * @Get('findOne/:id')
+   *
+   * @param id - The ID of the user to retrieve.
+   * @returns The retrieved user entity.
+   */
   //   @UseInterceptors(ClassSerializerInterceptor)
   @Get('findOne/:id')
   findOneUser(
@@ -85,6 +128,14 @@ export class UsersController {
     return response;
   }
 
+  /**
+   * Retrieves a user by their email.
+   *
+   * @Get()
+   *
+   * @param email - The email of the user to retrieve.
+   * @returns The retrieved user entity.
+   */
   //   @UseInterceptors(ClassSerializerInterceptor)
   //   @UseInterceptors(new SerializeInterceptor(UserDTO))
   @Get()
@@ -93,6 +144,15 @@ export class UsersController {
     return response;
   }
 
+  /**
+   * Updates a user by their ID.
+   *
+   * @Patch(':id')
+   *
+   * @param id - The ID of the user to update.
+   * @param body - The updated user data.
+   * @returns The updated user entity.
+   */
   @Patch(':id')
   updateUser(
     @Param(
@@ -106,6 +166,14 @@ export class UsersController {
     return response;
   }
 
+  /**
+   * Deletes a user by their ID.
+   *
+   * @Delete(':id')
+   *
+   * @param id - The ID of the user to delete.
+   * @returns The deleted user entity.
+   */
   @Delete(':id')
   removeUser(
     @Param(

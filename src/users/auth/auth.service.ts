@@ -4,10 +4,25 @@ import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 const scrypt = promisify(_scrypt);
 
+/**
+ * AuthService is responsible for handling user authentication and registration.
+ * It interacts with the UsersService to perform these operations.
+ */
 @Injectable()
 export class AuthService {
   constructor(private usersService: UsersService) {}
 
+  /**
+   * Handles user signup by validating email uniqueness, hashing the password,
+   * and storing the user in the database.
+   *
+   * @param email - The email of the user to be registered.
+   * @param password - The password of the user to be registered.
+   *
+   * @throws HttpException - If the email already exists in the database.
+   *
+   * @returns The newly created user object.
+   */
   async signupAuth({ email, password }: { email: string; password: string }) {
     const existingUser = await this.usersService.find({ email });
 
@@ -30,6 +45,17 @@ export class AuthService {
     return user;
   }
 
+  /**
+   * Handles user signin by validating the user's existence and password,
+   * and returning the user object if successful.
+   *
+   * @param email - The email of the user attempting to sign in.
+   * @param password - The password of the user attempting to sign in.
+   *
+   * @throws HttpException - If the user does not exist or the password is incorrect.
+   *
+   * @returns The user object if the signin is successful.
+   */
   async signinAuth({ email, password }: { email: string; password: string }) {
     const [user] = await this.usersService.find({ email });
 
