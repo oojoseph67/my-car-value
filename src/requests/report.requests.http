@@ -3,11 +3,23 @@ POST http://localhost:6666/reports/create
 content-type: application/json
 
 {
-  "company": "Toyota",
-  "model": "Prius",
-  "year": 2020,
+  "company": "Telsa",
+  "model": "Cybertruck",
+  "year": 2024,
   "longitude": 123.456,
   "latitude": 78.910,
-  "mileage": 100000,
-  "price": 10000
+  "mileage": 10000,
+  "price": 100000
 }
+
+### Approve Report
+PATCH http://localhost:6666/reports/approve/5
+content-type: application/json
+
+{
+  "approved": true
+}
+
+### Get All Reports
+GET http://localhost:6666/reports/allReports
+content-type: application/json

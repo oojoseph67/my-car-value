@@ -9,6 +9,9 @@ export class ReportEntity {
   @Column()
   price: number;
 
+  @Column({ default: false })
+  approved: boolean;
+
   @Column()
   company: string;
 
