@@ -27,6 +27,7 @@ import { UserEntity } from '../entity/user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('users/auth')
+// Serializing a response means for returning a response in a specific format. if we want to return a response in a specific format with specific fields, we can use the Serialize decorator
 @Serialize(UserDTO) // this can be added to an individual method
 // @UseInterceptors(CurrentUserInterceptor) // set up interceptors globally so no need for this but it can be used as a guard when trying to setup for individual controllers
 export class UsersController {

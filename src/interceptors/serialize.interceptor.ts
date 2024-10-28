@@ -34,6 +34,17 @@ export class SerializeInterceptor implements NestInterceptor {
   }
 }
 
+/**
+ * A NestJS interceptor that serializes the response data using class-transformer's `plainToInstance` method.
+ *
+ * @param dto - The class constructor to use for serialization.
+ *
+ * @returns An instance of `SerializeInterceptor` configured with the provided `dto`.
+ *
+ * @example
+ *
+ */
+
 // SYNTAX
 
 // export class SerializeInterceptor implements NestInterceptor {

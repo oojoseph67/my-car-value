@@ -1,0 +1,13 @@
+### Create Report
+POST http://localhost:6666/reports/create
+content-type: application/json
+
+{
+  "company": "Toyota",
+  "model": "Prius",
+  "year": 2020,
+  "longitude": 123.456,
+  "latitude": 78.910,
+  "mileage": 100000,
+  "price": 10000
+}

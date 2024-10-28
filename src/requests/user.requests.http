@@ -1,0 +1,25 @@
+### Signup
+POST http://localhost:6666/users/auth/signup
+content-type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "nestjsIS6@awesome"
+}
+
+### Signin
+POST http://localhost:6666/users/auth/signin
+content-type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "nestjsIS6@awesome"
+}
+
+### Who Am I
+GET http://localhost:6666/users/auth/whoami
+content-type: application/json
+
+### Signout
+POST http://localhost:6666/users/auth/signout
+content-type: application/json
