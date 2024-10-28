@@ -34,14 +34,6 @@ export class ReportsService {
   }
 
   async findAll() {
-    // return this.repo.find({ relations: ['user'] });
-    const userReports = await this.repo.find({ relations: ['user'] });
-    // const user = userReports.map((report) => report.user);
-    // console.log({ user, userReports });
-
-    // const reports = await this.repo.find();
-    // console.log({ reports });
-
-    return userReports;
+    return await this.repo.find({ relations: ['user'] });
   }
 }

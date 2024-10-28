@@ -3,7 +3,7 @@ POST http://localhost:6666/users/auth/signup
 content-type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "testV2@test.com",
   "password": "nestjsIS6@awesome"
 }
 

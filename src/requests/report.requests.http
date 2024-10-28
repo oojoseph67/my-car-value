@@ -13,7 +13,7 @@ content-type: application/json
 }
 
 ### Approve Report
-PATCH http://localhost:6666/reports/approve/5
+PATCH http://localhost:6666/reports/approve/6
 content-type: application/json
 
 {

@@ -16,6 +16,7 @@ import { UserEntity } from '@src/entity/user.entity';
 import { ReportDTO } from './dto/reports.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { ApproveReportDTO } from './dto/approve-reports.dto';
+import { AdminGuard } from '@src/guards/admin.guard';
 
 @Controller('reports')
 export class ReportsController {
@@ -35,6 +36,7 @@ export class ReportsController {
   }
 
   @Patch('/approve/:id')
+  @UseGuards(AdminGuard)
   approveReport(@Param('id') id: string, @Body() body: ApproveReportDTO) {
     return this.reportsService.changeApproval({ id, approved: body.approved });
   }
