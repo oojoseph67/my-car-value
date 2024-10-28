@@ -3,13 +3,13 @@ POST http://localhost:6666/reports/create
 content-type: application/json
 
 {
-  "company": "Telsa",
-  "model": "Cybertruck",
-  "year": 2024,
-  "longitude": 123.456,
-  "latitude": 78.910,
-  "mileage": 10000,
-  "price": 100000
+  "company": "ford",
+  "model": "mustang",
+  "year": 1990,
+  "longitude": 43.456,
+  "latitude": 48.910,
+  "mileage": 4324,
+  "price": 50000
 }
 
 ### Approve Report
@@ -23,3 +23,8 @@ content-type: application/json
 ### Get All Reports
 GET http://localhost:6666/reports/allReports
 content-type: application/json
+
+### Get Estimate
+GET http://localhost:6666/reports/estimate?company=ford
+content-type: application/json
+

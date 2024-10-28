@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
   Get,
+  Query, // used to extract query params from the request
 } from '@nestjs/common';
 import { ReportsService } from './reports.service';
 import { CreateReportDTO } from './dto/create-reports.dto';
@@ -17,7 +18,7 @@ import { ReportDTO } from './dto/reports.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { ApproveReportDTO } from './dto/approve-reports.dto';
 import { AdminGuard } from '@src/guards/admin.guard';
-
+import { GetEstimateDTO } from './dto/get-estimate.dto';
 @Controller('reports')
 export class ReportsController {
   constructor(private reportsService: ReportsService) {} // this is called dependency injection
@@ -45,5 +46,10 @@ export class ReportsController {
   @Serialize(ReportDTO)
   getReports() {
     return this.reportsService.findAll();
+  }
+
+  @Get('/estimate')
+  getEstimate(@Query() query: Partial<GetEstimateDTO>) {
+    return this.reportsService.createEstimate({ data: query });
   }
 }
